@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terra & Form</title>
-
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Georgia', serif;
@@ -13,6 +10,7 @@ body {
     color: #2f2f2f;
 }
 
+/* HEADER */
 header {
     display: flex;
     justify-content: space-between;
@@ -20,8 +18,13 @@ header {
     align-items: center;
 }
 
+nav {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 nav a {
-    margin: 0 15px;
+    margin: 5px 10px;
     text-decoration: none;
     color: #444;
     font-size: 14px;
@@ -41,6 +44,7 @@ nav a {
     display: flex;
     padding: 60px;
     align-items: center;
+    gap: 40px;
 }
 
 .hero-text {
@@ -61,6 +65,7 @@ nav a {
 .hero img {
     flex: 1;
     max-width: 100%;
+    border-radius: 10px;
 }
 
 /* SECTION */
@@ -81,10 +86,6 @@ nav a {
 
 .section-text h2 {
     font-size: 32px;
-}
-
-.features {
-    margin-top: 20px;
 }
 
 .features div {
@@ -111,96 +112,82 @@ nav a {
     padding: 50px;
 }
 
+/* FOOTER */
 footer {
     display: flex;
     justify-content: space-between;
     padding: 40px 60px;
     background: #2f2f2f;
     color: white;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-footer div {
-    max-width: 200px;
+/* 🔥 MOBILE RESPONSIVE */
+@media (max-width: 900px) {
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .hero {
+        flex-direction: column;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 32px;
+    }
+
+    .hero-text p {
+        margin: 15px auto;
+    }
+
+    .section {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .section img,
+    .section-text {
+        width: 100%;
+    }
+
+    .gallery {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .gallery img {
+        width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        padding: 30px;
+    }
+}
+
+/* 📱 EXTRA SMALL SCREENS */
+@media (max-width: 500px) {
+
+    .hero-text h1 {
+        font-size: 26px;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
 }
 </style>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<header>
-    <h2>terra & form</h2>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Portfolio</a>
-        <a href="#">Contact</a>
-    </nav>
-    <a href="#" class="btn">Book a Consult</a>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-text">
-        <h1>Timeless Spaces.<br>Thoughtfully Crafted.</h1>
-        <p>We blend natural textures, rich tones, and refined details to create interiors that feel balanced and uniquely yours.</p>
-        <a href="#" class="btn">Explore Portfolio</a>
-    </div>
-    <img src="image2.png" alt="Interior Design">
-</section>
-
-<!-- ABOUT SECTION -->
-<section class="section">
-    <img src="image3.png" alt="Materials">
-    <div class="section-text">
-        <h2>Nature-Inspired.<br>Detail-Driven.</h2>
-        <p>Every project begins with intention. We draw inspiration from organic forms and earthy palettes.</p>
-
-        <div class="features">
-            <div>🌿 Curated Materials</div>
-            <div>🏡 Personalized Design</div>
-            <div>✨ Seamless Experience</div>
-        </div>
-    </div>
-</section>
-
-<!-- GALLERY -->
-<section class="gallery">
-    <img src="kitchen1.png" alt="">
-    <img src="kitchen2.png" alt="">
-</section>
-
-<!-- CTA -->
-<section class="cta">
-    <h2>Ready to Transform Your Space?</h2>
-    <br>
-    <a href="#" class="btn">Book a Consult</a>
-</section>
-
-<!-- FOOTER -->
-<footer>
-    <div>
-        <h3>terra & form</h3>
-        <p>Crafting timeless spaces inspired by nature.</p>
-    </div>
-
-    <div>
-        <h4>Quick Links</h4>
-        <p>About</p>
-        <p>Services</p>
-        <p>Portfolio</p>
-    </div>
-
-    <div>
-        <h4>Contact</h4>
-        <p>hello@email.com</p>
-        <p>(555) 123-4567</p>
-    </div>
-</footer>
-
-</body>
-</html>
 
 
 
