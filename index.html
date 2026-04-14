@@ -1,689 +1,204 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>The sage space</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --sage: #9bb59b;
-      --sage-dark: #6f8a70;
-      --sage-light: #e7efe7;
-      --text-main: #2f3a32;
-      --text-muted: #6b746c;
-      --bg: #f7f8f6;
-      --white: #ffffff;
-      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.06);
-      --radius-lg: 16px;
-      --radius-md: 10px;
-      --radius-sm: 6px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px 16px 64px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--sage-dark);
-    }
-
-    nav a {
-      margin-left: 20px;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    nav a:hover {
-      color: var(--sage-dark);
-    }
-
-    /* Hero */
-
-    .hero {
-      background: var(--sage-dark);
-      border-radius: var(--radius-lg);
-      color: var(--white);
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
-      gap: 32px;
-      padding: 40px 40px 32px;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 40px;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(2rem, 3vw, 2.6rem);
-      margin-bottom: 12px;
-    }
-
-    .hero-text p {
-      font-size: 0.98rem;
-      max-width: 420px;
-      color: #f3f6f3;
-      margin-bottom: 24px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: var(--white);
-      color: var(--sage-dark);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-    }
-
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .hero-image {
-      background: url("https://images.pexels.com/photos/6585763/pexels-photo-6585763.jpeg?auto=compress&cs=tinysrgb&w=1200") center/cover no-repeat;
-      border-radius: var(--radius-md);
-      min-height: 260px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-image::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent 40%);
-    }
-
-    /* Sections */
-
-    section {
-      margin-bottom: 40px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      gap: 12px;
-    }
-
-    .section-header h2 {
-      font-size: 1.3rem;
-    }
-
-    .section-header p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .section-header .link {
-      font-size: 0.9rem;
-      color: var(--sage-dark);
-    }
-
-    /* Explore by Style */
-
-    .style-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 16px;
-    }
-
-    .style-card {
-      background: var(--white);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
-
-    .style-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .style-card-img {
-      height: 110px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .style-card-body {
-      padding: 10px 12px 12px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    /* Room Inspiration */
-
-    .room-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-    }
-
-    .room-card {
-      position: relative;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      background: #ddd;
-      min-height: 150px;
-      cursor: pointer;
-    }
-
-    .room-card::after {
-      content: attr(data-label);
-      position: absolute;
-      left: 12px;
-      bottom: 10px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.55);
-      color: #fff;
-      font-size: 0.8rem;
-    }
-
-    /* Interactive Tools */
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .tool-card {
-      background: var(--sage-light);
-      border-radius: var(--radius-md);
-      padding: 14px 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .tool-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .tool-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    /* Guides */
-
-    .guides-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .guide-card {
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 14px 14px 16px;
-      box-shadow: var(--shadow-soft);
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
-
-    .guide-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .guide-tag {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--sage-dark);
-      margin-bottom: 4px;
-    }
-
-    /* Shop the Look */
-
-    .shop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-    }
-
-    .shop-card {
-      background: var(--white);
-      border-radius: var(--radius-md);
-      padding: 14px 14px 16px;
-      box-shadow: var(--shadow-soft);
-      font-size: 0.9rem;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .shop-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: var(--sage-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      margin-bottom: 4px;
-    }
-
-    /* Testimonials */
-
-    .testimonials {
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 20px 18px 18px;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 40px;
-    }
-
-    .testimonials h3 {
-      font-size: 1.05rem;
-      margin-bottom: 10px;
-    }
-
-    .testimonial-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .stars {
-      color: #f5b400;
-      font-size: 0.9rem;
-      margin-top: 4px;
-    }
-
-    /* Newsletter */
-
-    .newsletter {
-      background: var(--sage);
-      border-radius: var(--radius-lg);
-      padding: 22px 18px 20px;
-      color: var(--white);
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
-      gap: 18px;
-      align-items: center;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 32px;
-    }
-
-    .newsletter h3 {
-      font-size: 1.1rem;
-      margin-bottom: 6px;
-    }
-
-    .newsletter p {
-      font-size: 0.9rem;
-      color: #f3f6f3;
-    }
-
-    .newsletter-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .newsletter input[type="email"] {
-      flex: 1 1 180px;
-      min-width: 0;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      outline: none;
-    }
-
-    .newsletter button {
-      background: var(--sage-dark);
-      color: #fff;
-      border-radius: 999px;
-      border: none;
-      padding: 10px 18px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .newsletter button:hover {
-      background: #5b735c;
-    }
-
-    /* Footer */
-
-    footer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-top: 1px solid #dde3dd;
-      padding-top: 16px;
-    }
-
-    .footer-links,
-    .footer-social {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .footer-social a {
-      font-weight: 500;
-      color: var(--sage-dark);
-    }
-
-    /* Responsive */
-
-    @media (max-width: 840px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-image {
-        order: -1;
-        min-height: 220px;
-      }
-
-      .newsletter {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terra & Form</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background-color: #f5f3ef;
+    color: #2f2f2f;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+    align-items: center;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #444;
+    font-size: 14px;
+}
+
+.btn {
+    background-color: #556b4f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    padding: 60px;
+    align-items: center;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    line-height: 1.2;
+}
+
+.hero-text p {
+    max-width: 400px;
+    margin: 20px 0;
+    color: #666;
+}
+
+.hero img {
+    flex: 1;
+    max-width: 100%;
+}
+
+/* SECTION */
+.section {
+    display: flex;
+    padding: 60px;
+    gap: 40px;
+}
+
+.section img {
+    width: 50%;
+    border-radius: 10px;
+}
+
+.section-text {
+    width: 50%;
+}
+
+.section-text h2 {
+    font-size: 32px;
+}
+
+.features {
+    margin-top: 20px;
+}
+
+.features div {
+    margin-bottom: 15px;
+}
+
+/* GALLERY */
+.gallery {
+    display: flex;
+    gap: 20px;
+    padding: 60px;
+}
+
+.gallery img {
+    width: 50%;
+    border-radius: 10px;
+}
+
+/* CTA */
+.cta {
+    background-color: #556b4f;
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 60px;
+    background: #2f2f2f;
+    color: white;
+}
+
+footer div {
+    max-width: 200px;
+}
+</style>
 </head>
+
 <body>
-  <div class="page">
-    <header>
-      <div class="logo">Inspire Your Space</div>
-      <nav>
-        <a href="#styles">Styles</a>
-        <a href="#rooms">Rooms</a>
-        <a href="#guides">Guides</a>
-        <a href="#shop">Shop</a>
-      </nav>
-    </header>
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-text">
-        <h1>Design a Home That Reflects You</h1>
-        <p>
-          Discover curated ideas, expert tips, and beautiful spaces to spark your creativity and transform any room.
-        </p>
-        <div class="hero-buttons">
-          <button class="btn btn-primary">Get Inspired</button>
-          <button class="btn btn-outline">Find Your Style</button>
-        </div>
-      </div>
-      <div class="hero-image" aria-label="Modern living room inspiration"></div>
-    </section>
-
-    <!-- Explore by Style -->
-    <section id="styles">
-      <div class="section-header">
-        <div>
-          <h2>Explore by Style</h2>
-          <p>Browse curated looks that match your aesthetic.</p>
-        </div>
-        <a href="#" class="link">Browse all styles →</a>
-      </div>
-      <div class="style-grid">
-        <div class="style-card">
-          <div class="style-card-img" style="background-image:url('https://images.pexels.com/photos/6585761/pexels-photo-6585761.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
-          <div class="style-card-body">Modern Minimalist</div>
-        </div>
-        <div class="style-card">
-          <div class="style-card-img" style="background-image:url('https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
-          <div class="style-card-body">Scandinavian</div>
-        </div>
-        <div class="style-card">
-          <div class="style-card-img" style="background-image:url('https://images.pexels.com/photos/1080696/pexels-photo-1080696.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
-          <div class="style-card-body">Boho Chic</div>
-        </div>
-        <div class="style-card">
-          <div class="style-card-img" style="background-image:url('https://images.pexels.com/photos/37347/office-freelancer-computer-business-37347.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
-          <div class="style-card-body">Industrial Loft</div>
-        </div>
-        <div class="style-card">
-          <div class="style-card-img" style="background-image:url('https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
-          <div class="style-card-body">Mid-Century Modern</div>
-        </div>
-        <div class="style-card">
-          <div class="style-card-img" style="background-image:url('https://images.pexels.com/photos/6585760/pexels-photo-6585760.jpeg?auto=compress&cs=tinysrgb&w=800');"></div>
-          <div class="style-card-body">Cozy Farmhouse</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Room Inspiration -->
-    <section id="rooms">
-      <div class="section-header">
-        <div>
-          <h2>Room Inspiration</h2>
-          <p>See real spaces and steal the ideas.</p>
-        </div>
-      </div>
-      <div class="room-grid">
-        <div class="room-card" data-label="Living Rooms" style="background-image:url('https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg?auto=compress&cs=tinysrgb&w=800'); background-size:cover; background-position:center;"></div>
-        <div class="room-card" data-label="Bedrooms" style="background-image:url('https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800'); background-size:cover; background-position:center;"></div>
-        <div class="room-card" data-label="Kitchens" style="background-image:url('https://images.pexels.com/photos/3735410/pexels-photo-3735410.jpeg?auto=compress&cs=tinysrgb&w=800'); background-size:cover; background-position:center;"></div>
-        <div class="room-card" data-label="Small Spaces" style="background-image:url('https://images.pexels.com/photos/3965555/pexels-photo-3965555.jpeg?auto=compress&cs=tinysrgb&w=800'); background-size:cover; background-position:center;"></div>
-      </div>
-    </section>
-
-    <!-- Interactive Tools -->
-    <section>
-      <div class="section-header">
-        <div>
-          <h2>Interactive Design Tools</h2>
-          <p>Personalize your space with easy-to-use tools.</p>
-        </div>
-      </div>
-      <div class="tools-grid">
-        <div class="tool-card">
-          <div class="tool-title">Moodboard Creator</div>
-          <div class="tool-desc">
-            Mix colors, textures, and furniture to visualize your dream room.
-          </div>
-        </div>
-        <div class="tool-card">
-          <div class="tool-title">Color Palette Picker</div>
-          <div class="tool-desc">
-            Choose a vibe and get curated palettes that work together.
-          </div>
-        </div>
-        <div class="tool-card">
-          <div class="tool-title">Style Quiz</div>
-          <div class="tool-desc">
-            Discover your design personality in just a few questions.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Guides -->
-    <section id="guides">
-      <div class="section-header">
-        <div>
-          <h2>Design Guides & Tips</h2>
-          <p>Learn the principles behind beautiful, functional spaces.</p>
-        </div>
-        <a href="#" class="link">Read more guides →</a>
-      </div>
-      <div class="guides-grid">
-        <article class="guide-card">
-          <div class="guide-tag">Space</div>
-          <h3>How to Make a Small Room Feel Bigger</h3>
-        </article>
-        <article class="guide-card">
-          <div class="guide-tag">Color</div>
-          <h3>2026 Color Trends You’ll See Everywhere</h3>
-        </article>
-        <article class="guide-card">
-          <div class="guide-tag">Budget</div>
-          <h3>Budget-Friendly Decor Ideas That Look High-End</h3>
-        </article>
-        <article class="guide-card">
-          <div class="guide-tag">Texture</div>
-          <h3>How to Mix Textures Like a Designer</h3>
-        </article>
-      </div>
-    </section>
-
-    <!-- Shop the Look -->
-    <section id="shop">
-      <div class="section-header">
-        <div>
-          <h2>Shop the Look</h2>
-          <p>Recreate the rooms you love with curated pieces.</p>
-        </div>
-        <a href="#" class="link">Shop this room →</a>
-      </div>
-      <div class="shop-grid">
-        <div class="shop-card">
-          <div class="shop-icon">🛋️</div>
-          <div>Sofas & Seating</div>
-          <small>Find the perfect anchor piece for your living room.</small>
-        </div>
-        <div class="shop-card">
-          <div class="shop-icon">💡</div>
-          <div>Lighting</div>
-          <small>Layered lighting to set the mood in every space.</small>
-        </div>
-        <div class="shop-card">
-          <div class="shop-icon">🧶</div>
-          <div>Rugs</div>
-          <small>Add warmth, texture, and definition to any room.</small>
-        </div>
-        <div class="shop-card">
-          <div class="shop-icon">🖼️</div>
-          <div>Wall Art</div>
-          <small>Finish your space with art that reflects you.</small>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials">
-      <h3>What People Are Saying</h3>
-      <div class="testimonial-list">
-        <div>
-          “This site transformed my home decor in a weekend!”
-          <div class="stars">★★★★★</div>
-        </div>
-        <div>
-          “The style quiz was spot on and made decisions so much easier.”
-        </div>
-        <div>
-          “I love the moodboard tool—it helped me see everything together before buying.”
-        </div>
-      </div>
-    </section>
-
-    <!-- Newsletter -->
-    <section class="newsletter">
-      <div>
-        <h3>Get Weekly Design Inspiration</h3>
-        <p>
-          Sign up for tips, trends, and curated ideas to help you create a home you truly love.
-        </p>
-      </div>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Enter your email" required />
-        <button type="submit">Subscribe</button>
-      </form>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer-links">
+<!-- HEADER -->
+<header>
+    <h2>terra & form</h2>
+    <nav>
+        <a href="#">Home</a>
         <a href="#">About</a>
-        <a href="#">Blog</a>
+        <a href="#">Services</a>
+        <a href="#">Portfolio</a>
         <a href="#">Contact</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-      <div class="footer-social">
-        <span>Follow:</span>
-        <a href="#">Instagram</a>
-        <a href="#">Pinterest</a>
-        <a href="#">TikTok</a>
-      </div>
-    </footer>
-  </div>
+    </nav>
+    <a href="#" class="btn">Book a Consult</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Timeless Spaces.<br>Thoughtfully Crafted.</h1>
+        <p>We blend natural textures, rich tones, and refined details to create interiors that feel balanced and uniquely yours.</p>
+        <a href="#" class="btn">Explore Portfolio</a>
+    </div>
+    <img src="hero.png" alt="Interior Design">
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="section">
+    <img src="materials.png" alt="Materials">
+    <div class="section-text">
+        <h2>Nature-Inspired.<br>Detail-Driven.</h2>
+        <p>Every project begins with intention. We draw inspiration from organic forms and earthy palettes.</p>
+
+        <div class="features">
+            <div>🌿 Curated Materials</div>
+            <div>🏡 Personalized Design</div>
+            <div>✨ Seamless Experience</div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+    <img src="kitchen1.png" alt="">
+    <img src="kitchen2.png" alt="">
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Ready to Transform Your Space?</h2>
+    <br>
+    <a href="#" class="btn">Book a Consult</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <h3>terra & form</h3>
+        <p>Crafting timeless spaces inspired by nature.</p>
+    </div>
+
+    <div>
+        <h4>Quick Links</h4>
+        <p>About</p>
+        <p>Services</p>
+        <p>Portfolio</p>
+    </div>
+
+    <div>
+        <h4>Contact</h4>
+        <p>hello@email.com</p>
+        <p>(555) 123-4567</p>
+    </div>
+</footer>
+
 </body>
 </html>
 
